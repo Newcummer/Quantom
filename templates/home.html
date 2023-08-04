@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <title>Quantom</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      color: rgb(255, 255, 255);
+      background-color: rgb(30, 30, 30);
+    }
+
+    .logout-container {
+      position: fixed;
+      top: 0;
+      right: 18px;
+    }
+
+    .logout-container a {
+      color: rgba(166, 0, 255, 0.634);
+      text-decoration: none;
+      position: relative;
+    }
+
+    .logout-container a::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 2px;
+      background-color: rgba(166, 0, 255, 0.634);
+      transition: width 0.4s ease;
+    }
+
+    .logout-container a:hover::before {
+      width: 100%;
+    }
+
+    .logout-container a:hover {
+      text-decoration: none;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      width: 100%;
+      padding: 20px;
+      box-sizing: border-box;
+      margin-top: 20px;
+    }
+
+    .big-text {
+      font-size: 36px;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .slider-container {
+      position: relative;
+      width: 80%;
+      max-width: 800px;
+      overflow: hidden;
+      margin: 0 auto;
+      border-radius: 4px;
+    }
+
+    .slider {
+      display: flex;
+      transition: transform 0.3s ease-in-out;
+      border-radius: 4px;
+    }
+
+    .slide {
+      flex: 0 0 100%;
+      max-width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      border-radius: 4px;
+    }
+
+    .slide img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: 4px;
+    }
+
+
+
+    .slide-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      cursor: pointer;
+    }
+
+    .prev-arrow {
+      left: 20px;
+    }
+
+    .next-arrow {
+      right: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  {% if session %}
+  <div class="logout-container">
+    <p><a href="/logout" id="qsLogoutBtn">Logout</a></p>
+  </div>
+  
+
+  {% else %}
+
+  <div class="logout-container">
+    <p><a href="/login" id="qsLoginBtn">Login</a></p>
+  </div>
+
+  <div class="container">
+    <h1 class="big-text">Welcome to Quantom</h1>
+  </div>
+
+  <div class="slider-container">
+    <div class="slider">
+      <div class="slide">
+        <img src="https://mydrugs123.web.app/static/media/Slide_Blue_Pill.cd5977bb.jpg" alt="Product 1">
+      </div>
+      <div class="slide">
+        <img src="https://mydrugs123.web.app/static/media/Slide_Green_Pill.63990feb.jpg" alt="Product 2">
+      </div>
+      <div class="slide">
+        <img src="https://mydrugs123.web.app/static/media/Slide_Purple_Pill.973957e6.jpg" alt="Product 3">
+      </div>
+    </div>
+    <div class="slider-controls">
+      <div class="slide-arrow prev-arrow">&#8249;</div>
+      <div class="slide-arrow next-arrow">&#8250;</div>
+    </div>
+  </div>
+
+
+
+  {% endif %}
+  <script>
+    const slider = document.querySelector('.slider');
+    const prevArrow = document.querySelector('.prev-arrow');
+    const nextArrow = document.querySelector('.next-arrow');
+    let currentIndex = 0;
+
+    prevArrow.addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + slider.children.length) % slider.children.length;
+      updateSliderPosition();
+    });
+
+    nextArrow.addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % slider.children.length;
+      updateSliderPosition();
+    });
+
+    function updateSliderPosition() {
+      const translateXValue = -currentIndex * 100;
+      slider.style.transform = `translateX(${translateXValue}%)`;
+    
+    
+    }
+
+    
+
+
+
+  </script>
+</body>
+</html>
